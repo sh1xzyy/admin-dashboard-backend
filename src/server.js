@@ -5,6 +5,7 @@ import { getEnvVar } from "./utils/getEnvVar.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { authRouter } from "./routes/auth.js";
+import { dashBoardRouter } from "./routes/dashboard.js";
 
 export const setupServer = () => {
   const app = express();
@@ -18,6 +19,7 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(cookieParser());
   app.use("/api/user", authRouter);
+  app.use("/api/dashboard", dashBoardRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
