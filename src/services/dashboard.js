@@ -4,7 +4,6 @@ import { ProductsCollection } from "../db/models/Products.js";
 import { SuppliersCollection } from "../db/models/Suppliers.js";
 
 export const dashboard = async (req, res) => {
-  // Fetch all required data with error handling
   const [allProducts, allSuppliers, allCustomers, finances] = await Promise.all(
     [
       ProductsCollection.find().exec(),
