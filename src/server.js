@@ -4,19 +4,20 @@ import cookieParser from "cookie-parser";
 import { getEnvVar } from "./utils/getEnvVar.js";
 import { notFoundHandler } from "./middleware/notFoundHandler.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { authRouter } from "./routes/auth.js";
 
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  app.use(
+    cors({
+      origin: [getEnvVar("LOCAL_URL"), getEnvVar("DEPLOYED_URL")],
+      credentials: true,
+    })
+  );
   app.use(express.json());
   app.use(cookieParser());
-  app.get("/", async (req, res) => {
-    res.status(200).json({
-      status: 200,
-      message: "Successfully my brother",
-    });
-  });
+  app.use("/api/user", authRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
