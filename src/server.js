@@ -7,6 +7,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { authRouter } from "./routes/auth.js";
 import { dashBoardRouter } from "./routes/dashboard.js";
 import { customersRouter } from "./routes/customers.js";
+import { ordersRouter } from "./routes/orders.js";
 
 export const setupServer = () => {
   const app = express();
@@ -22,6 +23,7 @@ export const setupServer = () => {
   app.use("/api/user", authRouter);
   app.use("/api/dashboard", dashBoardRouter);
   app.use("/api/customers", customersRouter);
+  app.use("/api/orders", ordersRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);

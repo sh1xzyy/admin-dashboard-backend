@@ -1,7 +1,6 @@
 import { model, Schema } from "mongoose";
-import { emailRegex, phoneRegex } from "../../constants/index.js";
 
-const customersSchema = new Schema(
+const ordersSchema = new Schema(
   {
     photo: {
       type: String,
@@ -10,36 +9,32 @@ const customersSchema = new Schema(
       type: String,
       required: true,
     },
-    email: {
-      type: String,
-      unique: true,
-      match: emailRegex,
-    },
-    spent: {
-      type: String,
-      required: true,
-    },
     address: {
       type: String,
       required: true,
     },
-    phone: {
+    products: {
       type: String,
-      match: phoneRegex,
       required: true,
     },
-    order_id: {
-      type: Schema.Types.ObjectId,
-      ref: "orders",
+    price: {
+      type: String,
+      required: true,
     },
-
-    product_ids: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "products",
-      },
-    ],
-    register_date: {
+    status: {
+      type: String,
+      enum: [
+        "Completed",
+        "Confirmed",
+        "Pending",
+        "Cancelled",
+        "Processing",
+        "Shipped",
+        "Delivered",
+      ],
+      required: true,
+    },
+    order_date: {
       type: String,
       default: () => {
         const date = new Date();
@@ -54,4 +49,4 @@ const customersSchema = new Schema(
   { versionKey: false }
 );
 
-export const CustomersCollection = model("customers", customersSchema);
+export const OrdersCollection = model("orders", ordersSchema);
