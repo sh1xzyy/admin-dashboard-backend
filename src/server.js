@@ -9,6 +9,7 @@ import { dashBoardRouter } from "./routes/dashboard.js";
 import { customersRouter } from "./routes/customers.js";
 import { ordersRouter } from "./routes/orders.js";
 import { productsRouter } from "./routes/products.js";
+import { suppliersRouter } from "./routes/suppliers.js";
 
 export const setupServer = () => {
   const app = express();
@@ -26,6 +27,7 @@ export const setupServer = () => {
   app.use("/api/customers", customersRouter);
   app.use("/api/orders", ordersRouter);
   app.use("/api/products", productsRouter);
+  app.use("/api/suppliers", suppliersRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
