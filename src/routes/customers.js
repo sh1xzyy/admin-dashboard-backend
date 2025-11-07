@@ -1,12 +1,17 @@
 import { Router } from "express";
 import { ctrlWrapper } from "../utils/ctrlWrapper.js";
-import { customersController } from "../controllers/customers.js";
+import {
+  getCustomersController,
+  getDefiniteCustomerController,
+} from "../controllers/customers.js";
 import { authenticate } from "../middleware/authenticate.js";
 
 export const customersRouter = Router();
 
+customersRouter.get("/", authenticate, ctrlWrapper(getCustomersController));
+
 customersRouter.get(
   "/:customerId",
   authenticate,
-  ctrlWrapper(customersController)
+  ctrlWrapper(getDefiniteCustomerController)
 );
