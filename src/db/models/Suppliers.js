@@ -24,6 +24,7 @@ const suppliersSchema = new Schema(
     },
     status: {
       type: String,
+      enum: ["Active", "Deactive"],
       required: true,
     },
   },
