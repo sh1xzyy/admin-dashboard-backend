@@ -8,6 +8,7 @@ import { authRouter } from "./routes/auth.js";
 import { dashBoardRouter } from "./routes/dashboard.js";
 import { customersRouter } from "./routes/customers.js";
 import { ordersRouter } from "./routes/orders.js";
+import { productsRouter } from "./routes/products.js";
 
 export const setupServer = () => {
   const app = express();
@@ -24,6 +25,7 @@ export const setupServer = () => {
   app.use("/api/dashboard", dashBoardRouter);
   app.use("/api/customers", customersRouter);
   app.use("/api/orders", ordersRouter);
+  app.use("/api/products", productsRouter);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
