@@ -28,5 +28,5 @@ export const getOrders = async ({ page, perPage, filters = {} }) => {
     })
   );
 
-  return { requiredCustomersData, total, totalPages };
+  return { orders: requiredCustomersData, total, totalPages };
 };

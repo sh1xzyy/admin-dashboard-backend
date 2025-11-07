@@ -15,7 +15,7 @@ export const dashboard = async (req, res) => {
 
   const recentCustomers = allCustomers.slice(-5).reverse();
 
-  const recentFinances = finances.slice(-5).reverse();
+  const recentFinances = finances.slice(-6).reverse();
 
   const recentCustomersCorrectData = recentCustomers.map(
     ({ _id, name, email, photo, spent }) => {
