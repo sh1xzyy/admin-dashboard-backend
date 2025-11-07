@@ -4,18 +4,20 @@ import { ProductsCollection } from "../db/models/Products.js";
 
 export const getOrders = async ({ page, perPage, filters = {} }) => {
   const skip = (page - 1) * perPage;
-  const query = CustomersCollection.find()
+
+  const filterQuery = {};
+
+  if (filters?.name) {
+    filterQuery.name = filters.name;
+  }
+
+  const customers = await CustomersCollection.find(filterQuery)
     .populate("order_id")
     .populate("product_ids")
     .skip(skip)
     .limit(perPage);
 
-  if (filters.name) {
-    query.where("name").equals(filters.name);
-  }
-
-  const customers = await query;
-  const total = await CustomersCollection.countDocuments();
+  const total = await CustomersCollection.countDocuments(filterQuery);
   const totalPages = Math.ceil(total / perPage);
 
   const requiredCustomersData = customers.map(
