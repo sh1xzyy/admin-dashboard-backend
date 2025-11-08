@@ -40,10 +40,11 @@ export const updateProductController = async (req, res) => {
 };
 
 export const deleteProductController = async (req, res) => {
-  await deleteProduct(req);
+  const { _id } = await deleteProduct(req);
 
   res.status(200).json({
     status: 200,
     message: "Successfully delete product",
+    data: _id,
   });
 };

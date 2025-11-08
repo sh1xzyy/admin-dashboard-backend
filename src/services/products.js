@@ -60,5 +60,7 @@ export const deleteProduct = async (req) => {
     throw createHttpError(404, "Product not found");
   }
 
-  await ProductsCollection.findByIdAndDelete(productId);
+  const deletedProduct = await ProductsCollection.findByIdAndDelete(productId);
+
+  return { _id: deletedProduct._id };
 };
