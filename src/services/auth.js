@@ -33,14 +33,14 @@ export const loginUser = async (req, res) => {
   if (!passwordCompare)
     throw createHttpError(401, "Email or password is invalid");
 
-  const accessToken = jwt.sign(
+  const newAccessToken = jwt.sign(
     { userId: user._id },
     getEnvVar("ACCESS_TOKEN_SECRET"),
     {
       expiresIn: "15m",
     }
   );
-  const refreshToken = jwt.sign(
+  const newRefreshToken = jwt.sign(
     { userId: user._id },
     getEnvVar("REFRESH_TOKEN_SECRET"),
     {
@@ -48,15 +48,16 @@ export const loginUser = async (req, res) => {
     }
   );
 
-  res.cookie("refreshToken", refreshToken, {
+   res.cookie("refreshToken", newRefreshToken, {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   const { email: usersEmail } = user.toObject();
 
-  return { user: { email: usersEmail }, accessToken };
+  return { user: { email: usersEmail }, accessToken: newAccessToken };
 };
 
 export const refreshUser = async (req, res) => {
@@ -85,10 +86,10 @@ export const refreshUser = async (req, res) => {
     { expiresIn: "7d" }
   );
 
-   res.cookie("refreshToken", newRefreshToken, {
+  res.cookie("refreshToken", newRefreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax", 
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
