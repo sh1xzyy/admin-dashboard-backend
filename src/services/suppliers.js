@@ -9,14 +9,14 @@ export const getSuppliers = async ({ page, perPage, filters }) => {
     filterQuery.name = filters.name;
   }
 
-  const products = await SuppliersCollection.find(filterQuery)
+  const suppliers = await SuppliersCollection.find(filterQuery)
     .skip(skip)
     .limit(perPage);
 
   const total = await SuppliersCollection.countDocuments(filterQuery);
   const totalPages = Math.ceil(total / perPage);
 
-  return { products, total, totalPages };
+  return { suppliers, total, totalPages };
 };
 
 export const addSupplier = async (req) => {
