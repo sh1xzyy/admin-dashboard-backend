@@ -10,14 +10,14 @@ export const getCustomers = async ({ page, perPage, filters }) => {
     filterQuery.name = filters.name;
   }
 
-  const customer = await CustomersCollection.find(filterQuery)
+  const customers = await CustomersCollection.find(filterQuery)
     .skip(skip)
     .limit(perPage);
 
   const total = await CustomersCollection.countDocuments(filterQuery);
   const totalPages = Math.ceil(total / perPage);
 
-  return { customer, total, totalPages };
+  return { customers, total, totalPages };
 };
 
 export const getDefiniteCustomer = async (req) => {
