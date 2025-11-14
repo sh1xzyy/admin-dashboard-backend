@@ -21,7 +21,8 @@ export const getOrders = async ({ page, perPage, filters = {} }) => {
   const totalPages = Math.ceil(total / perPage);
 
   const requiredCustomersData = customers.map(
-    ({ name, address, photo, order_id, product_ids }) => ({
+    ({ _id, name, address, photo, order_id, product_ids }) => ({
+      _id,
       name,
       address,
       photo,
